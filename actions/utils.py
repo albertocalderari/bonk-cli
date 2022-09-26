@@ -3,6 +3,7 @@ from random import randint
 from textwrap import wrap
 from typing import List
 
+import tweepy
 from tweepy import API, OAuthHandler
 from tweepy.models import Status
 
@@ -16,14 +17,14 @@ def authenticate(config: Config) -> API:
         access_token=config.access_token,
         access_token_secret=config.access_token_secret
     )
-    return API(auth)
+    return API(auth, wait_on_rate_limit=True)
 
 
 def search_tweets(twitter: API, keywords: List[str], meme_folder: Path, process_tweet_callable: callable):
     keywords = " ".join(keywords)
-    tweets = twitter.search_tweets(keywords, lang='en', result_type='recent')
     memes = get_memes(meme_folder)
-    for tweet in tweets:
+    cursor = tweepy.Cursor(twitter.search_tweets, keywords, lang='en', result_type='recent', tweet_mode='extended', count=200)
+    for tweet in cursor.items():
         process_tweet_callable(memes=memes, tweet=tweet, twitter=twitter)
 
 
@@ -37,7 +38,8 @@ def bonk(memes: List[str], tweet: Status, twitter: API):
     tweet: Status = tweet
     meme_id = randint(0, len(memes) - 1)
     selected_meme = memes[meme_id]
-    print(f"Tweet text:\n{wrap_text(tweet.text)}")
+    print("\n---------------------------------------\n")
+    print(f"Tweet text:\n{wrap_text(tweet.full_text)}")
     bonk = input("Shall we bonk? [any key=Yes/enter=No]")
     if bonk:
         txt = input("Add any text here: ") or ''
