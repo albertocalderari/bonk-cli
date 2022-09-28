@@ -8,7 +8,8 @@ main_subparser = parser.add_subparsers()
 init_parser: ArgumentParser = main_subparser.add_parser("init", help="Init the bonker")
 init_parser.set_defaults(func=init)
 
-timeline_parser: ArgumentParser = main_subparser.add_parser("timeline", help="Search for tweets to bonk in the timeline")
+timeline_parser: ArgumentParser = main_subparser.add_parser("timeline",
+                                                            help="Search for tweets to bonk in the timeline")
 timeline_subparser = timeline_parser.add_subparsers()
 search_parser: ArgumentParser = timeline_subparser.add_parser("search", help="Look for tweets to bonk")
 search_parser.add_argument('keyword', type=str, nargs="+", help="the keyword to be used for your search")
@@ -35,4 +36,4 @@ def main(args):
 
 
 if __name__ == '__main__':
-    main(['timeline', 'search', 'ukronzi'])
+    main(['vatnik', 'bonk', 'jameschristan11'])

@@ -1,7 +1,5 @@
 from argparse import Namespace
-from textwrap import wrap
 
-import tweepy
 from tweepy import API
 from tweepy.models import Status
 
@@ -36,8 +34,8 @@ def bonk_vatnik(ns: Namespace):
     count = ns.n
     config = Config.parse_file(CONFIG_FILE)
     twitter: API = authenticate(config)
-    cursor = tweepy.Cursor(twitter.user_timeline, creen_name=user, count=count, include_rts=False, tweet_mode='extended')
+    print(f"Searching timelie of user {user}")
+    cursor = twitter.user_timeline(screen_name=user, count=count, tweet_mode='extended', exclude_replies=True)
     memes = get_memes(config.meme_folder)
-    for tweet in cursor.items():
+    for tweet in cursor:
         bonk(memes, tweet, twitter)
-

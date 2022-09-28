@@ -1,9 +1,8 @@
-import base64
 from pathlib import Path
 from typing import TypeVar, Generic
 
 from adt import adt, Case
-from pydantic import BaseModel, validator
+from pydantic import BaseModel
 
 
 class Config(BaseModel):
@@ -13,7 +12,9 @@ class Config(BaseModel):
     access_token_secret: str
     meme_folder: Path
 
+
 T = TypeVar('T')
+
 
 @adt
 class Option(Generic[T]):
