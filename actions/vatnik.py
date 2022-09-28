@@ -1,4 +1,5 @@
 from argparse import Namespace
+from pathlib import Path
 
 from tweepy import API
 from tweepy.models import Status
@@ -22,17 +23,17 @@ def get_user(tweet: Status, **__):
         seen.add(handle)
 
 
-def search(ns: Namespace):
+def search(ns: Namespace, config_folder: Path):
     keywords = ns.keyword
-    config = Config.parse_file(CONFIG_FILE)
+    config = Config.parse_file(config_folder)
     twitter = authenticate(config)
     search_tweets(twitter, keywords, config.meme_folder, get_user)
 
 
-def bonk_vatnik(ns: Namespace):
+def bonk_vatnik(ns: Namespace, config_folder: Path):
     user = ns.user
     count = ns.n
-    config = Config.parse_file(CONFIG_FILE)
+    config = Config.parse_file(config_folder)
     twitter: API = authenticate(config)
     print(f"Searching timelie of user {user}")
     cursor = twitter.user_timeline(screen_name=user, count=count, tweet_mode='extended', exclude_replies=True)

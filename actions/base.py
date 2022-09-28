@@ -5,8 +5,8 @@ from models import Config, Option
 from static import CONFIG_FILE
 
 
-def init(args: Namespace):
-    current_config = get_current_config(CONFIG_FILE)
+def init(_: Namespace, config_folder: Path):
+    current_config = get_current_config(config_folder)
     [
         current_consumer_key,
         current_consumer_secret,
