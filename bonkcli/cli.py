@@ -50,8 +50,8 @@ def run(args):
 
 
 def main():
-    print(BANNER)
     print(DOG)
+    print(BANNER)
     try:
         run(sys.argv[1:])
     except KeyboardInterrupt:
