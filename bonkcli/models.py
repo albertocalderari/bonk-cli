@@ -1,3 +1,4 @@
+from enum import Enum
 from pathlib import Path
 from typing import TypeVar, Generic
 
@@ -20,3 +21,9 @@ T = TypeVar('T')
 class Option(Generic[T]):
     SOME: Case[T]
     NONE: Case[None]
+
+
+class By(Enum):
+    recent = 'recent'
+    popular = 'popular'
+    mixed = 'mixed'

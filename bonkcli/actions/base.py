@@ -1,12 +1,12 @@
 from argparse import Namespace
 from pathlib import Path
 
-from models import Config, Option
-from static import CONFIG_FILE
+from bonkcli.models import Config, Option
+from bonkcli.static import CONFIG_FILE
 
 
-def init(_: Namespace, config_folder: Path):
-    current_config = get_current_config(config_folder)
+def init(_: Namespace, config_file: Path):
+    current_config = get_current_config(config_file)
     [
         current_consumer_key,
         current_consumer_secret,
