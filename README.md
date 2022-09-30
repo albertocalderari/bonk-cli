@@ -1,6 +1,6 @@
 # bonk-cli
 
-intall: `pip install -r`
+intall: `pip install https://github.com/albertocalderari/bonk-cli`
 
 How to check the available commands:
 
