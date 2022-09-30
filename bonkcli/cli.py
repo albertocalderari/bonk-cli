@@ -16,27 +16,61 @@ init_parser: ArgumentParser = main_subparser.add_parser("init", help="Init the b
 init_parser.set_defaults(func=init)
 
 # timeline
-timeline_parser: ArgumentParser = main_subparser.add_parser("timeline",
-                                                            help="Search for tweets to bonk in the timeline")
+timeline_parser: ArgumentParser = main_subparser.add_parser(
+    "timeline",
+    help="Search for tweets to bonk in the timeline"
+)
 timeline_subparser = timeline_parser.add_subparsers()
-search_parser: ArgumentParser = timeline_subparser.add_parser("search", help="Look for tweets to bonk")
-search_parser.add_argument('keyword', type=str, nargs="+", help="the keyword to be used for your search")
-search_parser.add_argument("--by", type=By, default=By.recent,
-                           help=f"What method should be used to sort the tweets: {[v for v in By]}")
+search_parser: ArgumentParser = timeline_subparser.add_parser(
+    "search",
+    help="Look for tweets to bonk"
+)
+search_parser.add_argument(
+    'keyword',
+    type=str,
+    nargs="+",
+    help="the keyword to be used for your search"
+)
+search_parser.add_argument(
+    "--by",
+    type=By,
+    default=By.recent,
+    help=f"What method should be used to sort the tweets: {[v for v in By]}, default 'recent'"
+)
 search_parser.set_defaults(func=timeline.search)
 
 # vatnik
-vatnik_parser: ArgumentParser = main_subparser.add_parser("vatnik", help="Search for tweets to bonk in the timeline")
+vatnik_parser: ArgumentParser = main_subparser.add_parser(
+    "vatnik",
+    help="Search for tweets to bonk in the timeline"
+)
 subparser = vatnik_parser.add_subparsers()
-search_parser: ArgumentParser = subparser.add_parser("search", help="Look for possible vatniks")
-search_parser.add_argument('keyword', type=str, nargs="+", help="The keyword to be used for your search")
-search_parser.add_argument("--by", type=By, default=By.popular,
-                           help=f"What method should be used to sort the tweets: {', '.join(values)}")
+search_parser: ArgumentParser = subparser.add_parser(
+    "search",
+    help="Look for possible vatniks"
+)
+search_parser.add_argument(
+    'keyword',
+    type=str,
+    nargs="+",
+    help="The keyword to be used for your search"
+)
+search_parser.add_argument(
+    "--by",
+    type=By,
+    default=By.popular,
+    help=f"What method should be used to sort the tweets: {', '.join(values)}"
+)
 search_parser.set_defaults(func=vatnik.search)
 
-bonk_parser: ArgumentParser = subparser.add_parser("bonk", help="Look for possible vatniks")
-bonk_parser.add_argument('user', type=str, help="the user to bonk")
-bonk_parser.add_argument('-n', type=int, default=100, help="The nuber of tweets to bonk")
+bonk_parser: ArgumentParser = subparser.add_parser("bonk", help="Bonk a vatnik")
+bonk_parser.add_argument('user', type=str, help="The user to bonk")
+bonk_parser.add_argument(
+    '-n',
+    type=int,
+    default=100,
+    help="The nuber of tweets to bonk, default 100"
+)
 bonk_parser.set_defaults(func=vatnik.bonk_vatnik)
 
 
