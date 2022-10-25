@@ -15,4 +15,9 @@ setup(
             'bonkcli=bonkcli.cli:main',
         ],
     },
+    install_requires=[
+        "tweepy==4.10.1",
+        "algebraic-data-types==0.2.1",
+        "pydantic==1.10.2",
+    ]
 )

@@ -1,6 +1,13 @@
 # bonk-cli
 
-intall: `pip install https://github.com/albertocalderari/bonk-cli`
+First, get a Twitter developer account!
+pip install https://github.com/albertocalderari/bonk-cli
+
+Then install the cli...
+Then BONK!
+
+install: `pip install https://github.com/albertocalderari/bonk-cli`
+
 
 How to check the available commands:
 

@@ -51,7 +51,7 @@ def bonk(memes: List[str], tweet: Status, twitter: API):
     print("\n---------------------------------------\n")
     print(f"Author: @{tweet.author.screen_name}")
     print(f"Tweet text:\n{wrap_text(tweet.full_text)}")
-    bonk = input("Shall we bonk? [any key=Yes/enter=No]")
+    bonk = input("Shall we bonk? [any key=Yes/enter=No] ")
     if bonk:
         txt = input("Add any text here: ") or ''
         _ = twitter.update_status_with_media(
