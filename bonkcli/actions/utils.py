@@ -3,6 +3,7 @@ from random import randint
 from textwrap import wrap
 from typing import List
 
+import tweepy
 from tweepy import API, OAuthHandler
 from tweepy.models import Status
 
@@ -50,18 +51,25 @@ def bonk(memes: List[str], tweet: Status, twitter: API):
     selected_meme = memes[meme_id]
     print("\n---------------------------------------\n")
     print(f"Author: @{tweet.author.screen_name}")
-    print(f"Tweet text:\n{wrap_text(tweet.full_text)}")
+    if hasattr(tweet, 'retweeted_status'):
+        full_text = tweet.retweeted_status.full_text
+    else:
+        full_text = tweet.full_text
+    print(f"Tweet text:\n{wrap_text(full_text)}")
     bonk = input("Shall we bonk? [any key=Yes/enter=No] ")
     if bonk:
         txt = input("Add any text here: ") or ''
-        _ = twitter.update_status_with_media(
-            status=txt,
-            filename=selected_meme,
-            in_reply_to_status_id=tweet.id,
-            auto_populate_reply_metadata=True
-        )
-        u = tweet.user
-        print(f"@{u.screen_name} was bonked")
+        try:
+            _ = twitter.update_status_with_media(
+                status=txt,
+                filename=selected_meme,
+                in_reply_to_status_id=tweet.id,
+                auto_populate_reply_metadata=True
+            )
+            u = tweet.user
+            print(f"@{u.screen_name} was bonked")
+        except tweepy.errors.Forbidden as e:
+            print(f"\nERROR: Could not bonk because of an error: {e}")
 
 
 def wrap_text(text: str) -> str:
