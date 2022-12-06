@@ -86,15 +86,7 @@ def wrap_text(text: str) -> str:
 
 
 def chose_memes_folder(meme_folder: Path, category_score: Dict[str, int]) -> Path:
-    categories = []
-    for category in meme_folder.iterdir():
-        if category.name.startswith('.'):
-            continue
-        if category.name not in category_score:
-            category_score[category.name] = 0
-        categories.append(category.name)
-
-    categories.sort(key=category_score.get)
+    categories = build_and_sort_categories(category_score, meme_folder)
 
     questions = [
         inquirer.List(
@@ -111,3 +103,15 @@ def chose_memes_folder(meme_folder: Path, category_score: Dict[str, int]) -> Pat
     else:
         raise KeyboardInterrupt("Cancelled by user")
     return meme_folder / sub_folder
+
+
+def build_and_sort_categories(category_score, meme_folder):
+    categories = []
+    for category in meme_folder.iterdir():
+        if category.name.startswith('.'):
+            continue
+        if category.name not in category_score:
+            category_score[category.name] = 0
+        categories.append(category.name)
+    categories.sort(key=category_score.get, reverse=True)
+    return categories
