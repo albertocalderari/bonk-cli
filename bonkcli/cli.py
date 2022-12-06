@@ -71,6 +71,18 @@ bonk_parser.add_argument(
     default=100,
     help="The nuber of tweets to bonk, default 100"
 )
+bonk_parser.add_argument(
+    '--retweets',
+    type=bool,
+    default=False,
+    help="Include Retweets"
+)
+bonk_parser.add_argument(
+    '--replies',
+    type=bool,
+    default=False,
+    help="Include Replies"
+)
 bonk_parser.set_defaults(func=vatnik.bonk_vatnik)
 
 

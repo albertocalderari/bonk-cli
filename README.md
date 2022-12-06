@@ -6,7 +6,7 @@ First, get a Twitter developer account!
 
 Then install the cli...
 
-install: `pip3 install git+https://github.com/albertocalderari/bonk-cli.git@0.0.4`
+install: `pip3 install git+https://github.com/albertocalderari/bonk-cli.git@0.0.5`
 
 Then BONK!
 

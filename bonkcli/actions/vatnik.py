@@ -33,10 +33,18 @@ def search(ns: Namespace, config_folder: Path):
 def bonk_vatnik(ns: Namespace, config_file: Path):
     user = ns.user
     count = ns.n
+    exclude_replies = not ns.replies
+    include_rts = ns.retweets
     config = Config.parse_file(config_file)
     twitter: API = authenticate(config)
     print(f"Searching timelie of user {user}")
-    cursor = twitter.user_timeline(screen_name=user, count=count, tweet_mode='extended', exclude_replies=True)
+    cursor = twitter.user_timeline(
+        screen_name=user,
+        count=count,
+        tweet_mode='extended',
+        exclude_replies=exclude_replies,
+        include_rts=include_rts
+    )
     memes = get_memes(config.meme_folder)
     for tweet in cursor:
         bonk(memes, tweet, twitter)
