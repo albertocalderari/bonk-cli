@@ -2,7 +2,7 @@ import sys
 from argparse import ArgumentParser, Namespace
 
 from bonkcli.actions import timeline, vatnik
-from bonkcli.actions.base import init, update_current_config, get_current_config
+from bonkcli.actions.base import init, update_current_config
 from bonkcli.models import By
 from bonkcli.static import CONFIG_FILE, BANNER, DOG
 
@@ -94,7 +94,6 @@ def run(args):
     else:
         args.append("-h")
         parser.parse_args(args)
-
 
 
 def main():

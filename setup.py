@@ -19,5 +19,6 @@ setup(
         "tweepy==4.10.1",
         "algebraic-data-types==0.2.1",
         "pydantic==1.10.2",
+        "inquirer==3.0.0"
     ]
 )
