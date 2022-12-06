@@ -2,7 +2,7 @@ import sys
 from argparse import ArgumentParser, Namespace
 
 from bonkcli.actions import timeline, vatnik
-from bonkcli.actions.base import init
+from bonkcli.actions.base import init, update_current_config, get_current_config
 from bonkcli.models import By
 from bonkcli.static import CONFIG_FILE, BANNER, DOG
 
@@ -73,14 +73,14 @@ bonk_parser.add_argument(
 )
 bonk_parser.add_argument(
     '--retweets',
-    type=bool,
     default=False,
+    action='store_true',
     help="Include Retweets"
 )
 bonk_parser.add_argument(
     '--replies',
-    type=bool,
     default=False,
+    action='store_true',
     help="Include Replies"
 )
 bonk_parser.set_defaults(func=vatnik.bonk_vatnik)
@@ -89,16 +89,15 @@ bonk_parser.set_defaults(func=vatnik.bonk_vatnik)
 def run(args):
     namespace: Namespace = parser.parse_args(args)
     if hasattr(namespace, 'func'):
-        namespace.func(namespace, CONFIG_FILE)
+        config = namespace.func(namespace, CONFIG_FILE)
+        update_current_config(CONFIG_FILE, config)
     else:
         args.append("-h")
         parser.parse_args(args)
 
 
+
 def main():
     print(DOG)
     print(BANNER)
-    try:
-        run(sys.argv[1:])
-    except KeyboardInterrupt:
-        pass
+    run(sys.argv[1:])

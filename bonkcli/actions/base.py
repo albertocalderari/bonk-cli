@@ -2,7 +2,6 @@ from argparse import Namespace
 from pathlib import Path
 
 from bonkcli.models import Config, Option
-from bonkcli.static import CONFIG_FILE
 
 
 def init(_: Namespace, config_file: Path):
@@ -29,8 +28,7 @@ def init(_: Namespace, config_file: Path):
         access_token_secret=access_token_secret,
         meme_folder=meme_folder
     )
-    with CONFIG_FILE.open('w') as f:
-        f.write(conf.json())
+    return conf
 
 
 def input_request(key, current) -> str:
@@ -44,3 +42,8 @@ def get_current_config(config_file: Path) -> Option[Config]:
         return Option.SOME(Config.parse_file(config_file))
     else:
         return Option.NONE()
+
+
+def update_current_config(config_file: Path, config: Config) -> None:
+    with config_file.open('w') as f:
+        f.write(config.json())

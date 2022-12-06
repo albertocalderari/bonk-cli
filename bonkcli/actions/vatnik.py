@@ -4,7 +4,7 @@ from pathlib import Path
 from tweepy import API
 from tweepy.models import Status
 
-from bonkcli.actions.utils import authenticate, search_tweets, wrap_text, bonk, get_memes
+from bonkcli.actions.utils import authenticate, search_tweets, wrap_text, bonk
 from bonkcli.models import Config
 
 seen = set()
@@ -22,15 +22,19 @@ def get_user(tweet: Status, **__):
         seen.add(handle)
 
 
-def search(ns: Namespace, config_folder: Path):
+def search(ns: Namespace, config_folder: Path) -> Config:
     keywords = ns.keyword
     by = ns.by
     config = Config.parse_file(config_folder)
     twitter = authenticate(config)
-    search_tweets(twitter, keywords, config.meme_folder, get_user, by)
+    try:
+        search_tweets(twitter, keywords, config.meme_folder, get_user, by)
+    except KeyboardInterrupt:
+        pass
+    return config
 
 
-def bonk_vatnik(ns: Namespace, config_file: Path):
+def bonk_vatnik(ns: Namespace, config_file: Path) -> Config:
     user = ns.user
     count = ns.n
     exclude_replies = not ns.replies
@@ -45,6 +49,9 @@ def bonk_vatnik(ns: Namespace, config_file: Path):
         exclude_replies=exclude_replies,
         include_rts=include_rts
     )
-    memes = get_memes(config.meme_folder)
-    for tweet in cursor:
-        bonk(memes, tweet, twitter)
+    try:
+        for tweet in cursor:
+            bonk(config.meme_folder, config.category_score, tweet, twitter)
+    except KeyboardInterrupt:
+        pass
+    return config
